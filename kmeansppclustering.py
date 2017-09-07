@@ -59,6 +59,9 @@ for ntrial in xrange(ntrials):
 #Plotting the Gap curve(Values to be provided accordingly)
 #plt.plot(np.linspace(10,19,10,True),gap)
 #plt.show()
+
+#The following lines of code were written to test if there are more than one clusters for which optimal number of K is obtained
+#Though that should not happen
 unique_opt_k = list(set(optimal_ks))
 k_count = {}
 count_opt_k = 0
@@ -73,7 +76,6 @@ for u_o_k in unique_opt_k:
 	elif count==count_opt_k:
 		second_opt_k = u_o_k
 print opt_k
-print k_count
 
 #Clusterin with optimal number of k
 
