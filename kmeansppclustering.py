@@ -7,7 +7,7 @@ from sklearn.svm import SVC
 
 filename = sys.argv[1]
 datafile = sio.loadmat(filename)
-data = datafile['bow']
+data = datafile['variable_name']
 sizedata=[len(data), len(data[0])]
 disp = []
 optimal_ks = []
@@ -16,7 +16,7 @@ def gap_statistic(data):
 	sizedata = [len(data),len(data[0])]
 	SD = []
 	gap = []
-	for knum in xrange(10,22):
+	for knum in xrange(0,20):
 		print knum
 		#Clustering original Data
 		kmeanspp = KMeans(n_clusters=knum,init = 'k-means++',max_iter = 100,n_jobs = 1)
@@ -43,17 +43,20 @@ def gap_statistic(data):
 		if diff>0:
 			opt_k = i+10
 			break
-	if opt_k < 22:
+	if opt_k < 20:
 		print opt_k
 		return opt_k
 	else:
-		return 22
+		return 20
+	#Here maximum limit is used 20 because the data used while testing this code was not supposed to have more than 20 clusters
+	#However it may be changed according to need. Hence the last if-else statement may not be reuired in that case.
 
 
 ntrials = 50
 for ntrial in xrange(ntrials):
 	print 'ntrial: ',ntrial
 	optimal_ks.append(gap_statistic(data))
+#Plotting the Gap curve(Values to be provided accordingly)
 #plt.plot(np.linspace(10,19,10,True),gap)
 #plt.show()
 unique_opt_k = list(set(optimal_ks))
@@ -71,9 +74,9 @@ for u_o_k in unique_opt_k:
 		second_opt_k = u_o_k
 print opt_k
 print k_count
-##14, 0
+
 #Clusterin with optimal number of k
-#opt_k =14
+
 kmeanspp = KMeans(n_clusters = opt_k,init='k-means++',max_iter=100,n_jobs=1)
 kmeanspp.fit(data)
 centers = kmeanspp.cluster_centers_
